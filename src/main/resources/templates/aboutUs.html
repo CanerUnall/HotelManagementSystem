@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta th:replace="~{fragments/head :: metas}"/>
+    <title>Hotel About Us</title>
+    <style th:replace="~{fragments/head :: styles}"/>
+    <script th:replace="~{fragments/head :: scripts}"/>
+
+    <!-- myjquery.js has to be BEFORE aboutUs.js !!!! -->
+    <script th:src="@{js/aboutUs.js}"></script>
+
+    <script>
+        $(document).ready(function() {
+            console.log("initializing");
+            init();
+        });
+    </script>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="content">
+
+        <div th:replace="~{/fragments/navbarFragment :: navbarFragment}"></div>
+        <div class="container" id="aboutUs">
+            <h3 th:text="#{aboutUs.title}">Current About Us in database:</h3>
+            <p/>
+            <table id="aboutUs-table" class="display mx-auto">
+                <thead>
+                <tr>
+                    <th th:text="#{aboutUs.id}">About Us ID</th>
+                    <th th:text="#{aboutUs.description}">English Description</th>
+                    <th th:text="#{aboutUs.descriptionZh}">Chinese Description</th>
+                    <th th:text="#{aboutUs.image}">Image</th>
+                </tr>
+                </thead>
+            </table>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" id="edit-aboutUs-button" th:text="#{edit.aboutUs}">Edit aboutUs</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="aboutUs-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{new.aboutUs}">New aboutUs</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="aboutUs-form">
+                            <div class="form-group">
+                                <input type="text" class="d-none form-control" id="aboutUsId" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="description" th:text="#{aboutUs.description}">Description:</label>
+                                <input type="text" class="form-control" id="description">
+                                <input type="text" class="form-control" id="descriptionZh">
+                            </div>
+                            <div class="form-group">
+                                <label for="image" th:text="#{aboutUs.image}">Current Image:</label>
+                                <img id="currentImage" src="" width="100px">
+                                <label for="image" th:text="#{aboutUs.image}">Upload New Image:</label>
+                                <input type="file" class="form-control" id="image">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" th:text="#{new.aboutUs}">Submit</button>
+                                <button id="closeButton" type="button" class="btn btn-default" data-dismiss="modal" th:text="#{delete.aboutUs}">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="image-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{image.modal.title}">Image</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <img id="modal-image" src="" alt="Large Image" style="width:100%;height:auto;">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{delete.aboutUs}">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!--        for alert-->
+        <div id="messages" style="display: none;">
+            <span id="select-aboutUs-message" th:text="#{select.aboutUs.first}">Select aboutUs first</span>
+        </div>
+    </div>
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

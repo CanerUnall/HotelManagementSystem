@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta th:replace="~{fragments/head :: metas}"/>
+    <title th:text="#{contactMessages.title}">Contact Messages</title>
+    <style th:replace="~{fragments/head :: styles}"/>
+    <script th:replace="~{fragments/head :: scripts}"/>
+    <!-- myjquery.js has to be BEFORE contactMessage.js !!!! -->
+    <script th:src="@{js/contactMessage.js}"></script>
+
+    <script>
+        $(document).ready(function() {
+            console.log("initializing");
+            init();
+        });
+    </script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="content">
+        <div th:replace="~{/fragments/navbarFragment :: navbarFragment}"></div>
+        <div class="container" id="contactMessage">
+            <!-- contactMessage table -->
+            <h3 th:text="#{contactMessages.current}">Current contactMessages in database:</h3>
+
+            <table id="contactMessage-table1" class="display mx-auto">
+                <thead>
+                <tr>
+                    <th th:text="#{contactMessages.id}">Contact Message ID</th>
+                    <th th:text="#{contactMessages.authorName}">Author Name</th>
+                    <th th:text="#{contactMessages.email}">Email</th>
+                    <th th:text="#{contactMessages.message}">Message</th>
+                    <th th:text="#{contactMessages.creationDateTime}">Creation Date Time</th>
+                </tr>
+                </thead>
+            </table>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" id="delete-contactMessage-button" th:text="#{contactMessages.delete}">Delete Contact Message</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="contactMessage-delete-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{contactMessages.delete}">Delete Contact Message</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body" th:text="#{contactMessages.areYouSure}">
+                        Are you sure?
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" id="delete-contactMessage-confirm-button" class="btn btn-danger" data-dismiss="modal" th:text="#{contactMessages.delete}">Delete</button>
+                        <button type="button" class="btn btn-secondary contactMessage-close-button" data-dismiss="modal" th:text="#{contactMessages.cancel}">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--        for alert-->
+        <div id="messages" style="display: none;">
+            <span id="select-contact-message" th:text="#{select.message.first}">Select Message first</span>
+        </div>
+
+        <!-- İçeriğinizi buraya ekleyin -->
+    </div>
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+
+</body>
+</html>

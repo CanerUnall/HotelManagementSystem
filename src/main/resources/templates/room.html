@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta th:replace="~{fragments/head :: metas}"/>
+    <title th:text="#{title.rooms}">Rooms</title>
+    <style th:replace="~{fragments/head :: styles}"/>
+    <script th:replace="~{fragments/head :: scripts}"/>
+    <script th:src="@{js/room.js}"></script>
+
+    <script>
+        $(document).ready(function() {
+            console.log("initializing");
+            init();
+        });
+    </script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="content">
+        <div th:replace="~{/fragments/navbarFragment :: navbarFragment}"></div>
+        <div class="container" id="room">
+            <!-- Room table -->
+            <h3 th:text="#{current.rooms}">Current rooms in database:</h3>
+
+            <table id="room-table1" class="display mx-auto">
+                <thead>
+                <tr>
+                    <th th:text="#{room.roomID}">Room ID</th>
+                    <th th:text="#{room.roomNumber}">Room Number</th>
+                    <th th:text="#{room.roomType}">Room Type</th>
+                    <th th:text="#{room.countOfAdult}">Count of Adult</th>
+                    <th th:text="#{room.countOfChild}">Count of Child</th>
+                    <th th:text="#{room.floor}">Floor</th>
+                    <th th:text="#{room.price}">Price</th>
+                    <th th:text="#{room.description}">Description</th>
+                    <th th:text="#{room.facilities}">Facilities</th>
+                    <th th:text="#{room.bedType}">Bed Type</th>
+                    <th th:text="#{room.cleaned}">Cleaning</th>
+                    <th th:text="#{room.smoking}">Smoking</th>
+                    <th th:text="#{room.disabled}">Disabled</th>
+                    <th th:text="#{room.photos}">Image URL List</th>
+                </tr>
+                </thead>
+            </table>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" id="new-room-button" th:text="#{button.newRoom}">New Room</button>
+                    <button type="button" class="btn btn-primary" id="edit-room-button" th:text="#{button.editRoom}">Edit Room</button>
+                    <button type="button" class="btn btn-primary" id="delete-room-button" th:text="#{button.deleteRoom}">Delete Room</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="room-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{modal.editRoom}">Edit Room</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="roomForm">
+                            <div class="form-group">
+                                <input type="number" class="d-none form-control" id="roomId" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="roomNumber" th:text="#{room.roomNumber}">Room Number:</label>
+                                <input type="text" class="form-control" id="roomNumber" name="roomNumber">
+                                <span id="roomNumber-status"></span>
+                            </div>
+                            <div class="col">
+                                <label for="roomType1" th:text="#{room.roomType}">Category:</label>
+                                <select id="roomType1" class="form-control">
+                                    <option value="" disabled selected th:text="#{room.selectCategory}">Select Category</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="countOfAdult" th:text="#{room.countOfAdult}">Count Of Adults:</label>
+                                <input type="number" class="form-control" id="countOfAdult">
+                            </div>
+                            <div class="form-group">
+                                <label for="countOfChild" th:text="#{room.countOfChild}">Count Of Children:</label>
+                                <input type="number" class="form-control" id="countOfChild">
+                            </div>
+                            <div class="form-group">
+                                <label for="floor" th:text="#{room.floor}">Floor:</label>
+                                <input type="text" class="form-control" id="floor">
+                            </div>
+                            <div class="form-group">
+                                <label for="price" th:text="#{room.price}">Price:</label>
+                                <input type="text" class="form-control" id="price">
+                            </div>
+                            <div class="form-group">
+                                <label for="description" th:text="#{room.description}">Description:</label>
+                                <input type="text" class="form-control" id="description">
+                            </div>
+                            <div class="form-group">
+                                <label for="facilities1" th:text="#{room.facilities}">Facilities:</label>
+                                <div class="card-body" id="facilities1"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="bedTypes1" th:text="#{room.bedType}">Bed Type:</label>
+                                <div class="card-body" id="bedTypes1"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cleaned" th:text="#{room.cleaned}">Cleaning:</label>
+                                <input type="checkbox" id="cleaned" checked>
+                            </div>
+                            <div class="form-group">
+                                <label for="smoking" th:text="#{room.smoking}">Smoking:</label>
+                                <input type="checkbox" id="smoking">
+                            </div>
+                            <div class="form-group">
+                                <label for="disabled" th:text="#{room.disabled}">Disabled:</label>
+                                <input type="checkbox" id="disabled">
+                            </div>
+                            <div class="form-group">
+                                <label for="photos" th:text="#{room.photos}">Image URL:</label>
+                                <input type="file" id="photos" name="photos" multiple>
+                            </div>
+                            <div id="imageContainer">
+                                <!-- Images will be dynamically added here -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" id="saveButton" th:text="#{button.save}">Save</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{button.cancel}">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for showing large image -->
+        <div id="image-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{modal.image}">Image</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <img id="modal-image" src="" alt="Large Image" style="width:100%;height:auto;">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{button.cancel}">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="room-delete-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{modal.deleteRoom}">Delete Room</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" th:text="#{modal.areYouSure}">Are you sure?</div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" id="delete-room-confirm-button" class="btn btn-danger" data-dismiss="modal" th:text="#{button.deleteConfirm}">Delete</button>
+                        <button type="button" class="btn btn-secondary room-close-button" data-dismiss="modal" th:text="#{button.cancel}">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Facilities and Bed Types Modal -->
+        <div id="details-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="details-modal-title" th:text="#{modal.details}">Details</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" id="details-modal-body">
+                        <!-- Details will be dynamically added here -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{button.cancel}">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Description -->
+        <div id="description-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{modal.description}">Description</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="description-content" th:text="#{modal.descriptionContent}">Description will appear here.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{button.cancel}">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="messages" style="display: none;">
+            <span id="viewDescription" th:text="#{view.description}">View Description</span>
+            <span id="viewFacilities" th:text="#{view.facilities}">View Facilities</span>
+            <span id="viewBedType" th:text="#{view.bedType}">View Bed Type</span>
+        </div>
+
+    </div>
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

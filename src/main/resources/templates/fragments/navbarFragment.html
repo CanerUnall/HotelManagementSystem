@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta th:replace="~{fragments/head :: metas}"/>
+    <title>Navbar Fragment</title>
+    <style th:replace="~{fragments/head :: styles}"/>
+    <script th:replace="~{fragments/head :: scripts}"/>
+
+    <script src="/js/loginAndRegister.js"></script>
+    <script src="/js/language.js"></script>
+</head>
+<body>
+
+<!-- Navbar -->
+<div th:fragment="navbarFragment">
+    <header id="headerNavbar" class="header">
+        <nav id="navbar_homePage" class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">
+                <img th:src="@{/img/mainPage/CompanyLogo.jpg}" id="navbar_logo" alt="Logo"/>
+                <span class="custom-font1">Molveno Lake Resort</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a id="a_hp1" sec:authorize="isAnonymous() or hasAnyAuthority('GENERAL MANAGER','GUEST','RECEPTIONIST','CLEANER')"
+                           th:href="@{/bookNow}" class="nav-link" th:text="#{navbar.makeReservation}">Make a Reservation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="a_hp2" sec:authorize="isAnonymous() or hasAnyAuthority('GUEST')"
+                           href="http://localhost:8080/#about" class="nav-link" th:text="#{navbar.aboutUs}">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="a_hp3" class="nav-link" sec:authorize="isAnonymous() or hasAnyAuthority('GUEST')"
+                           href="http://localhost:8080/#services" th:text="#{navbar.additional}">Additional</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="a_hp4" class="nav-link" sec:authorize="isAnonymous() or hasAnyAuthority('GUEST')"
+                           href="http://localhost:8080/#testimonials" th:text="#{navbar.comments}">Comments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="a_hp5" class="nav-link" sec:authorize="hasAnyAuthority('GENERAL MANAGER')"
+                           th:href="@{/user}" th:text="#{navbar.userManagement}">User Management</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="roomDropdown" class="nav-link dropdown-toggle" sec:authorize="hasAnyAuthority('GENERAL MANAGER')"
+                           href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{navbar.roomManagement}">
+                            Room Management
+                        </a>
+                        <div id="dropdownMenu" class="dropdown-menu">
+                            <a class="dropdown-item" th:href="@{/room}" th:text="#{navbar.rooms}">Rooms</a>
+                            <a class="dropdown-item" th:href="@{/roomTypes}" th:text="#{navbar.roomTypes}">Room Types</a>
+                            <a class="dropdown-item" th:href="@{/bedTypes}" th:text="#{navbar.bedTypes}">Bed Types</a>
+                            <a class="dropdown-item" th:href="@{/facilities}" th:text="#{navbar.facilities}">Facilities</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a id="a_hp7" class="nav-link" sec:authorize="hasAnyAuthority('GENERAL MANAGER','RECEPTIONIST')"
+                           th:href="@{/reservation}" th:text="#{navbar.reservationManagement}">Reservation Management</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="webDropdown" class="nav-link dropdown-toggle" sec:authorize="hasAnyAuthority('GENERAL MANAGER')"
+                           href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{navbar.webManagement}">
+                            Web Management
+                        </a>
+                        <div id="webDropdownMenu" class="dropdown-menu">
+                            <a class="dropdown-item" th:href="@{/carousels}" th:text="#{navbar.mainCarousels}">Main Carousels</a>
+                            <a class="dropdown-item" th:href="@{/aboutUs}" th:text="#{navbar.aboutUs}">About Us</a>
+                            <a class="dropdown-item" th:href="@{/amenities}" th:text="#{navbar.services}">Services</a>
+                            <a class="dropdown-item" th:href="@{/comments}" th:text="#{navbar.customerComments}">Customer Comments</a>
+                            <a class="dropdown-item" th:href="@{/contactMessages}" th:text="#{navbar.customerMessages}">Customer Messages</a>
+                            <a class="dropdown-item" th:href="@{/hotelInformation}" th:text="#{navbar.hotelInformation}">Hotel Information</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a id="a_hp8" class="nav-link" sec:authorize="hasAnyAuthority('CLEANER')"
+                           th:href="@{/dirtyRooms}" th:text="#{navbar.cleaningManagement}">Cleaning Management</a>
+                    </li>
+                    <li class="nav-item language-selector forLanguage">
+                        <a href="#" th:if="${session.lang} == 'zh'" th:href="@{/change-language(lang='en')}">
+                            <img src="/img/flags/UkFlag.png" alt="English" title="English"/>
+                        </a>
+                        <a href="#" th:if="${session.lang} == 'en' or ${session.lang} == null" th:href="@{/change-language(lang='zh')}">
+                            <img src="/img/flags/ChineFlag.jpg" alt="Chinese" title="Chinese"/>
+                        </a>
+                    </li>
+                    <li class="nav-item language-selector" th:if="${not #authorization.expression('isAuthenticated')}">
+                        <a href="#" data-toggle="modal" data-target="#loginAndRegisterModal">
+                            <img src="/img/user-profile-login-access-authentication-icon_690577-203.avif" alt="Login/Register" title="Login/Register"/>
+                        </a>
+                    </li>
+                    <li class="nav-item language-selector" th:if="${#authorization.expression('isAuthenticated()')}">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle dropdown-toggle-right" href="#" role="button" id="profileDropdown"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="/img/user-profile-login-access-authentication-icon_690577-203.avif" alt="Profile"
+                                     title="Profile" th:title="#{navbar.profile}"/>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
+                                <a class="dropdown-item" sec:authorize="hasAnyAuthority('GUEST','GENERAL MANAGER','RECEPTIONIST','CLEANER')"
+                                   th:href="@{/profile}" th:text="#{navbar.profile}">Profile</a>
+                                <a class="dropdown-item" sec:authorize="hasAnyAuthority('GUEST','GENERAL MANAGER','RECEPTIONIST','CLEANER')"
+                                   th:href="@{/myReservations}" th:text="#{navbar.myReservations}">My Reservations</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" sec:authorize="isAuthenticated()">
+                                    <form th:action="@{/logout}" method="post">
+                                        <input type="submit" value="Logout" th:value="#{navbar.logout}">
+                                    </form>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Login and Register Modal Fragment -->
+    <div class="modal fade" id="loginAndRegisterModal" tabindex="-1" aria-labelledby="loginAndRegisterModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Başlık -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginAndRegisterModalLabel" th:text="#{navbar.profile}">Profile</h5>
+                    <!-- Modal kapatma butonu -->
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Register ve Login tablarını içeren tab menüsü -->
+                    <ul class="nav nav-tabs" id="profileTab" role="tablist">
+                        <!-- Login Tab -->
+                        <li class="nav-item">
+                            <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login"
+                               aria-selected="true" th:text="#{navbar.login}">Login</a>
+                        </li>
+                        <!-- Register Tab -->
+                        <li class="nav-item">
+                            <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register"
+                               aria-selected="false" th:text="#{navbar.register}">Register</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="profileTabContent">
+                        <!-- Login Tab İçeriği -->
+                        <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                            <!-- Login Form -->
+                            <form th:action="@{/login}" method="POST">
+                                <div class="form-group">
+                                    <label for="loginEmail" th:text="#{navbar.email}">Email:</label>
+                                    <input type="email" class="form-control" id="loginEmail" name="email" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="loginPassword" th:text="#{navbar.password}">Password:</label>
+                                    <input type="password" class="form-control" id="loginPassword" name="password" required/>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary" style="display: inline;" th:text="#{navbar.login}">Login</button>
+                                    <a class="dropdown-item" th:href="@{/resetPasswordRequest}" style="display: inline;" th:text="#{navbar.forgotPassword}">Forgot password?</a>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Register Tab İçeriği -->
+                        <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                            <!-- Register Form -->
+                            <form id="registerForm" th:action="@{/registration}" method="post" th:object="${user}">
+                                <div class="form-group">
+                                    <label for="registerName" th:text="#{register.firstName}">First Name:</label>
+                                    <input type="text" class="form-control" id="registerName" name="userName" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerSurname" th:text="#{register.lastName}">Last Name:</label>
+                                    <input type="text" class="form-control" id="registerSurname" name="userSurName" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerEmail" th:text="#{register.email}">Email:</label>
+                                    <input type="email" class="form-control" id="registerEmail" name="email" required/>
+                                    <small id="emailHelpRegister" class="form-text text-muted"></small>
+                                </div>
+                                <div class="form-group password-group">
+                                    <label for="registerPassword" th:text="#{register.password}">Password:</label>
+                                    <input type="password" class="form-control" id="registerPassword" name="password" required/>
+                                    <div id="toggle-password-container-register" style="margin-top: 5px;">
+                                        <i class="fa fa-eye" id="toggle-password-register" style="cursor: pointer;"></i>
+                                        <small id="passwordHelpRegister" class="form-text text-muted"></small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerPhoneNumber" th:text="#{register.phoneNumber}">Phone Number:</label>
+                                    <input type="tel" class="form-control" id="registerPhoneNumber" name="phoneNumber" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerCountry" th:text="#{register.country}">Country:</label>
+                                    <input type="text" class="form-control" id="registerCountry" name="address.country" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerCity" th:text="#{register.city}">City:</label>
+                                    <input type="text" class="form-control" id="registerCity" name="address.city" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerStreet" th:text="#{register.street}">Street:</label>
+                                    <input type="text" class="form-control" id="registerStreet" name="address.street" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerZipCode" th:text="#{register.zipCode}">Zip Code:</label>
+                                    <input type="text" class="form-control" id="registerZipCode" name="address.zipCode" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerHouseNumber" th:text="#{register.houseNumber}">House Number:</label>
+                                    <input type="text" class="form-control" id="registerHouseNumber" name="address.houseNumber" required/>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary" th:text="#{register.submit}">Register</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+<script src="/js/loginAndRegister.js"></script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+
+    <meta th:replace="~{fragments/head :: metas}"/>
+    <title th:text="#{reservation.title}">Reservations</title>
+    <style th:replace="~{fragments/head :: styles}"/>
+    <style>
+        #reservation {
+          display: flex;
+          flex-direction: column; /* İçeriği dikey yönde düzenler */
+          align-items: center; /* Yatayda ortalar */
+          justify-content: center; /* Dikeyde ortalar */
+          width: 100%;
+          padding: 0 20px; /* Sağ ve sol kenarlardan boşluk bırakır */
+          box-sizing: border-box; /* Padding'i genişlik içinde tutar */
+        }
+
+        #reservation-table1 {
+          width: 100%;
+          max-width: 70%; /* Tablonun genişliğini ayarlar ve kenarlardan daha fazla boşluk bırakır */
+          margin-bottom: 20px; /* Butonlarla tablo arasında boşluk bırakır */
+          box-sizing: border-box; /* Tablonun genişliği için padding'i hesaba katar */
+        }
+
+        .row {
+          width: 100%;
+          max-width: 70%; /* Butonların genişliğini ayarlar ve kenarlardan daha fazla boşluk bırakır */
+          display: flex;
+          justify-content: center; /* Butonları ortalar */
+          flex-wrap: nowrap; /* Butonların satırı aşmasını engeller */
+          gap: 10px; /* Butonlar arasında boşluk bırakır */
+        }
+
+        .btn {
+          flex: 1; /* Butonların eşit genişlikte olmasını sağlar */
+          min-width: 100px; /* Butonların minimum genişliğini ayarlar */
+          margin: 0; /* Butonlar arasındaki kenar boşluklarını sıfırlar */
+        }
+
+        th {
+          white-space: nowrap; /* Metnin tek satırda kalmasını sağlar */
+          writing-mode: horizontal-tb; /* Metni yatay yönde yazar */
+          text-align: center; /* Başlıkları ortalar */
+        }
+    </style>
+
+
+    <script th:replace="~{fragments/head :: scripts}"/>
+
+    <script th:src="@{js/reservation.js}"></script>
+    <script>
+        $(document).ready(function() {
+            init();
+        });
+    </script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="content">
+        <div th:replace="~{/fragments/navbarFragment :: navbarFragment}"></div>
+        <div class="container" id="reservation">
+            <h3 th:text="#{reservation.current}">Current reservations in database:</h3>
+            <table id="reservation-table1" class="display mx-auto">
+                <thead>
+                <tr>
+                    <th th:text="#{reservation.reservationID}">ID</th>
+                    <th th:text="#{reservation.roomNumber}">Room Number</th>
+                    <th th:text="#{reservation.guestEmail}">Email</th>
+                    <th th:text="#{reservation.guestList}">Guest List</th>
+                    <th th:text="#{reservation.totalPrice}">Total Price</th>
+                    <th th:text="#{reservation.canceled}">Canceled</th>
+                    <th th:text="#{reservation.cancellationFee}">Cancellation Fee</th>
+                    <th th:text="#{reservation.checkInDate}">Start Date</th>
+                    <th th:text="#{reservation.checkOutDate}">End Date</th>
+                    <th th:text="#{reservation.transactionDate}">Creation Date</th>
+                    <th th:text="#{reservation.checkin}">Checked In</th>
+                    <th th:text="#{reservation.checkinDate}">Checked In Date</th>
+                    <th th:text="#{reservation.checkout}">Checked Out</th>
+                    <th th:text="#{reservation.checkoutDate}">Checked Out Date</th>
+                </tr>
+                </thead>
+            </table>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" id="new-reservation-button" th:text="#{reservation.new}">New Reservation</button>
+                    <button type="button" class="btn btn-primary" id="edit-reservation-button" th:text="#{reservation.edit}">Edit Reservation</button>
+                    <button type="button" class="btn btn-primary" id="checkIn-reservation-button" th:text="#{reservation.checkin}">Check In</button>
+                    <button type="button" class="btn btn-primary" id="checkOut-reservation-button" th:text="#{reservation.checkout}">Check Out</button>
+                    <button type="button" class="btn btn-primary" id="cancel-reservation-button" th:text="#{reservation.cancel1}">Cancel Reservation</button>
+                    <button type="button" class="btn btn-primary" id="delete-reservation-button" th:text="#{reservation.delete}">Delete Reservation</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="reservation-delete-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{reservations.delete.modal.title}">Delete Reservation</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" th:text="#{reservations.delete.modal.body}">Are you sure?</div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" id="delete-reservation-confirm-button" class="btn btn-danger" th:text="#{reservations.delete.modal.confirm}" data-dismiss="modal">Delete</button>
+                        <button type="button" class="btn btn-secondary room-close-button" th:text="#{reservations.delete.modal.cancel}" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!--        <div id="reservation-cancel-modal" class="modal fade" role="dialog">-->
+<!--            <div class="modal-dialog">-->
+<!--                <div class="modal-content">-->
+<!--                    <div class="modal-header">-->
+<!--                        <h4 class="modal-title" th:text="#{reservation.cancelTitle}">Cancel Reservation</h4>-->
+<!--                        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--                    </div>-->
+<!--                    <div class="modal-body" th:text="#{reservation.areYouSure}">Are you sure?</div>-->
+<!--                    <div class="modal-footer justify-content-center">-->
+<!--                        <button type="button" id="cancel-reservation-confirm-button" class="btn btn-danger" data-dismiss="modal" th:text="#{reservation.cancel}">Cancel</button>-->
+<!--                        <button type="button" class="btn btn-secondary room-close-button" data-dismiss="modal" th:text="#{reservation.cancel2}">Cancel</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div id="reservation-details-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{reservation.detailsTitle}">Reservation Details</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 th:text="#{reservation.adults}">Adults:</h5>
+                        <ul id="adult-names-list">
+                            <!-- Yetişkin isimleri burada gösterilecek -->
+                        </ul>
+                        <h5 th:text="#{reservation.children}">Children:</h5>
+                        <ul id="child-names-list">
+                            <!-- Çocuk isimleri burada gösterilecek -->
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{reservation.close}">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Room Details Modal -->
+        <div id="room-details-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="room-details-modal-title">Room Details</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" id="room-details-modal-body">
+                        <!-- Room details will be dynamically added here -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Alert Messages for JavaScript -->
+        <div id="messages" style="display: none;">
+            <span id="select-reservation-message" th:text="#{reservation.SelectReservation}"></span>
+            <span id="check-out-passed" th:text="#{reservation.checkOutPassed}"></span>
+            <span id="check-in-passed" th:text="#{reservation.checkInPassed}"></span>
+            <span id="reservation-has-been-canceled" th:text="#{reservation.reservationHasBeenCanceled}"></span>
+            <span id="reservation-with-cancellation-fee" th:text="#{reservation.confirmCancellationWithFee}"></span>
+            <span id="reservation-without-cancellation-fee" th:text="#{reservation.confirmCancellationWithoutFee}"></span>
+            <span id="viewGuestList" th:text="#{reservation.viewGuestList}" style="display:none;"></span>
+
+            <span id="checkin-cancelled-reservation-message" th:text="#{reservation.checkinCancelled}" style="display:none;">Cancelled reservations cannot be checked in.</span>
+            <span id="checkin-before-startdate-message" th:text="#{reservation.checkinBeforeStartDate}" style="display:none;">Cannot check in before the start date.</span>
+
+            <span id="checkout-before-checkin-message" th:text="#{reservation.checkoutBeforeCheckin}" style="display:none;">Cannot check out before check-in.</span>
+            <span id="checkout-before-startdate-message" th:text="#{reservation.checkoutBeforeStartDate}" style="display:none;">Cannot check out before the start date.</span>
+            <!-- Check-in Alert Messages -->
+            <span id="checkin-canceled-reservation" th:text="#{reservation.checkinCancelled}" style="display:none;">You cannot check in a canceled reservation.</span>
+            <span id="checkin-before-startdate" th:text="#{reservation.checkinBeforeStartDate}" style="display:none;">You cannot check in before the start date.</span>
+            <span id="already-checkedin" th:text="#{reservation.alreadyCheckedIn}" style="display:none;">This reservation has already been checked in.</span>
+
+            <!-- Check-out Alert Messages -->
+            <span id="checkout-canceled-reservation" th:text="#{reservation.checkoutCancelled}" style="display:none;">You cannot check out a canceled reservation.</span>
+            <span id="checkout-before-startdate" th:text="#{reservation.checkoutBeforeStartDate}" style="display:none;">You cannot check out before the start date.</span>
+            <span id="must-checkin-first" th:text="#{reservation.mustCheckInFirst}" style="display:none;">You must check in before you can check out.</span>
+            <span id="already-checkedout" th:text="#{reservation.alreadyCheckedOut}" style="display:none;">This reservation has already been checked out.</span>
+
+            <!-- Success Messages -->
+            <span id="reservation-checkedin" th:text="#{reservation.checkedInSuccess}" style="display:none;">Reservation has been checked in.</span>
+            <span id="reservation-checkedout" th:text="#{reservation.checkedOutSuccess}" style="display:none;">Reservation has been checked out.</span>
+
+
+        </div>
+
+
+
+        <!-- İçeriğinizi buraya ekleyin -->
+    </div>
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+
+</body>
+</html>

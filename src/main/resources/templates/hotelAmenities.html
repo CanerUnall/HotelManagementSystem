@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta th:replace="~{fragments/head :: metas}"/>
+    <title th:text="#{hotelAmenities.title}">Services</title>
+    <style th:replace="~{fragments/head :: styles}"/>
+    <script th:replace="~{fragments/head :: scripts}"/>
+    <script th:src="@{js/hotelAmenities.js}"></script>
+
+    <script>
+        $(document).ready(function() {
+            console.log("initializing");
+            init();
+        });
+    </script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="content">
+        <div th:replace="~{/fragments/navbarFragment :: navbarFragment}"></div>
+        <div class="container" id="hotelAmenities">
+            <!-- hotelAmenities table -->
+            <h3 th:text="#{hotelAmenities.current}">Current Hotel Amenities in database:</h3>
+            <p/>
+            <table id="hotelAmenities-table" class="display mx-auto">
+                <thead>
+                <tr>
+                    <th th:text="#{hotelAmenities.id}">ID</th>
+                    <th th:text="#{hotelAmenities.hotelAmenitiesName}">English Name</th>
+                    <th th:text="#{hotelAmenities.hotelAmenitiesNameZh}">Chinese Name</th>
+                    <th th:text="#{hotelAmenities.hotelAmenitiesContent}">English Content</th>
+                    <th th:text="#{hotelAmenities.hotelAmenitiesContentZh}">Chinese Content</th>
+                    <th th:text="#{hotelAmenities.icon}">Icon</th>
+                </tr>
+                </thead>
+            </table>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" id="new-hotelAmenities-button" th:text="#{hotelAmenities.new}">New Hotel Amenities</button>
+                    <button type="button" class="btn btn-primary" id="edit-hotelAmenities-button" th:text="#{hotelAmenities.edit}">Edit Hotel Amenities</button>
+                    <button type="button" class="btn btn-primary" id="delete-hotelAmenities-button" th:text="#{hotelAmenities.delete}">Delete Hotel Amenities</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="hotelAmenities-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{hotelAmenities.new}">New hotelAmenities</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="hotelAmenities-form">
+                            <div class="form-group">
+                                <input type="text" class="d-none form-control" id="hotelAmenitiesId" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="hotelAmenitiesName" th:text="#{hotelAmenities.hotelAmenitiesName}">Amenities Name:</label>
+                                <input type="text" class="form-control" id="hotelAmenitiesName">
+                                <input type="text" class="form-control" id="hotelAmenitiesNameZh">
+                            </div>
+                            <div class="form-group">
+                                <label for="hotelAmenitiesContent" th:text="#{hotelAmenities.hotelAmenitiesContent}">Hotel Amenities Content:</label>
+                                <input type="text" class="form-control" id="hotelAmenitiesContent">
+                                <input type="text" class="form-control" id="hotelAmenitiesContentZh">
+                            </div>
+                            <div class="form-group">
+                                <label for="icon" th:text="#{hotelAmenities.icon}">Hotel Amenities Icon:</label>
+                                <input type="text" class="form-control" id="icon">
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" th:text="#{hotelAmenities.submit}">Submit</button>
+                                <button id="closeButton" type="button" class="btn btn-default" data-dismiss="modal" th:text="#{hotelAmenities.close}">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="hotelAmenities-delete-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{hotelAmenities.delete}">Delete hotelAmenities</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body" th:text="#{hotelAmenities.areYouSure}">
+                        Are you sure?
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" id="delete-hotelAmenities-confirm-button" class="btn btn-danger" data-dismiss="modal" th:text="#{hotelAmenities.delete}">Delete</button>
+                        <button type="button" class="btn btn-secondary hotelAmenities-close-button" data-dismiss="modal" th:text="#{hotelAmenities.cancel}">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--        for alert-->
+        <div id="messages" style="display: none;">
+            <span id="select-hotelAmenities-message" th:text="#{hotelAmenities.selectFirst}">Select Hotel Amenities First</span>
+        </div>
+
+    </div>
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

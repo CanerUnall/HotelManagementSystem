@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta th:replace="~{fragments/head :: metas}"/>
+    <title th:text="#{comments.title}">Comments</title>
+    <style th:replace="~{fragments/head :: styles}"/>
+    <script th:replace="~{fragments/head :: scripts}"/>
+    <!-- myjquery.js has to be BEFORE comments.js !!!! -->
+    <script th:src="@{js/comments.js}"></script>
+
+    <script>
+        $(document).ready(function() {
+            console.log("initializing");
+            init();
+        });
+    </script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="content">
+        <div th:replace="~{/fragments/navbarFragment :: navbarFragment}"></div>
+        <div class="container" id="comment">
+            <!--    comment table -->
+            <h3 th:text="#{comments.current}">Current comments in database:</h3>
+
+            <table id="comment-table1" class="display mx-auto">
+                <thead>
+                <tr>
+                    <th th:text="#{comments.id}">Comment ID</th>
+                    <th th:text="#{comments.author}">Author</th>
+                    <th th:text="#{comments.content}">English Content</th>
+                    <th th:text="#{comments.contentZh}">Chinese Content</th>
+                </tr>
+                </thead>
+            </table>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" id="new-comment-button" th:text="#{comments.new}">New comment</button>
+                    <button type="button" class="btn btn-primary" id="edit-comment-button" th:text="#{comments.edit}">Edit comment</button>
+                    <button type="button" class="btn btn-primary" id="delete-comment-button" th:text="#{comments.delete}">Delete comment</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="comment-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{comments.edit}">Edit comment</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="commentForm">
+                            <div class="form-group">
+                                <input type="number" class="d-none form-control" id="commentId" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="commentContent" th:text="#{comments.content}">Comment Content:</label>
+                                <input type="text" class="form-control" id="commentContent">
+                                <input type="text" class="form-control" id="commentContentZh">
+                            </div>
+                            <div class="form-group">
+                                <label for="author" th:text="#{comments.author}">Author:</label>
+                                <input type="text" class="form-control" id="author">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" id="saveButton" th:text="#{comments.save}">Save</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{comments.close}">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="comment-delete-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{comments.delete}">Delete comment</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body" th:text="#{comments.areYouSure}">
+                        Are you sure?
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" id="delete-comment-confirm-button" class="btn btn-danger" data-dismiss="modal" th:text="#{comments.delete}">Delete</button>
+                        <button type="button" class="btn btn-secondary comment-close-button" data-dismiss="modal" th:text="#{comments.cancel}">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--        for alert-->
+        <div id="messages" style="display: none;">
+            <span id="select-comments-message" th:text="#{comments.selectFirst}">Select Comments first</span>
+        </div>
+
+        <!-- İçeriğinizi buraya ekleyin -->
+    </div>
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

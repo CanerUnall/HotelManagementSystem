@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta th:replace="~{fragments/head :: metas}"/>
+    <title th:text="#{facilities.title}">Facilities</title>
+    <style th:replace="~{fragments/head :: styles}"/>
+    <script th:replace="~{fragments/head :: scripts}"/>
+    <!-- myjquery.js has to be BEFORE facilities.js !!!! -->
+    <script src="js/facilities.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            console.log("initializing");
+            init();
+        });
+    </script>
+
+</head>
+<body>
+<div class="wrapper">
+    <div class="content">
+        <div th:replace="~{/fragments/navbarFragment :: navbarFragment}"></div>
+        <div class="container" id="facilities">
+            <!-- facilities table -->
+            <h3 th:text="#{facilities.current}">Current facilities in database:</h3>
+            <p/>
+            <table id="facilities-table" class="display mx-auto">
+                <thead>
+                <tr>
+                    <th th:text="#{facilities.id}">Facilities Id</th>
+                    <th th:text="#{facilities.name}">Facilities Name</th>
+                    <th th:text="#{facilities.nameZh}">Facilities Name Zh</th>
+                </tr>
+                </thead>
+            </table>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" id="new-facilities-button" th:text="#{facilities.new}">New facilities</button>
+                    <button type="button" class="btn btn-primary" id="edit-facilities-button" th:text="#{facilities.edit}">Edit facilities</button>
+                    <button type="button" class="btn btn-primary" id="delete-facilities-button" th:text="#{facilities.delete}">Delete facilities</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="facilities-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{facilities.newTitle}">New facilities</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="facilities-form">
+                            <div class="form-group">
+                                <input type="text" class="d-none form-control" id="facilitiesId" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="facilitiesName" th:text="#{facilities.nameLabel}">Name:</label>
+                                <input type="text" class="form-control" id="facilitiesName">
+                                <input type="text" class="form-control" id="facilitiesNameZh">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" th:text="#{facilities.submit}">Submit</button>
+                                <button id="closeButton" type="button" class="btn btn-default" data-dismiss="modal" th:text="#{facilities.close}">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="facilities-delete-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{facilities.deleteTitle}">Delete facilities</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" th:text="#{facilities.confirmDelete}">Are you sure?</div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" id="delete-facilities-confirm-button" class="btn btn-danger" data-dismiss="modal" th:text="#{facilities.delete}">Delete</button>
+                        <button type="button" class="btn btn-secondary room-close-button" data-dismiss="modal" th:text="#{facilities.cancel}">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- İçeriğinizi buraya ekleyin -->
+        <div id="messages" style="display: none;">
+            <span id="select-facilities-message" th:text="#{select.facilities.first}">Select facilities first</span>
+        </div>
+    </div>
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

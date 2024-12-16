@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta th:replace="~{fragments/head :: metas}"/>
+    <title th:text="#{bedType.title}">Bed Types</title>
+    <style th:replace="~{fragments/head :: styles}"/>
+    <script th:replace="~{fragments/head :: scripts}"/>
+
+    <script src="/js/bedType.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            console.log("initializing");
+            init();
+        });
+    </script>
+
+
+
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="content">
+        <div th:replace="~{/fragments/navbarFragment :: navbarFragment}"></div>
+        <div class="container" id="bedType">
+            <!-- bedType table -->
+            <h3 th:text="#{bedType.current}">Current bedTypes in database:</h3>
+            <p/>
+            <table id="bedType-table" class="display mx-auto">
+                <thead>
+                <tr>
+                    <th th:text="#{bedType.id}">Bed Type Id</th>
+                    <th th:text="#{bedType.name}">Bed Type Name</th>
+                    <th th:text="#{bedType.nameZh}">Bed Type NameZh</th>
+                </tr>
+                </thead>
+            </table>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" id="new-bedType-button" th:text="#{bedType.new}">New bedType</button>
+                    <button type="button" class="btn btn-primary" id="edit-bedType-button" th:text="#{bedType.edit}">Edit bedType</button>
+                    <button type="button" class="btn btn-primary" id="delete-bedType-button" th:text="#{bedType.delete}">Delete bedType</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="bedType-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{bedType.newTitle}">New bedType</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="bedType-form">
+                            <div class="form-group">
+                                <input type="text" class="d-none form-control" id="bedTypeId" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="bedTypeName" th:text="#{bedType.nameLabel}">Name:</label>
+                                <input type="text" class="form-control" id="bedTypeName">
+                                <label for="bedTypeNameZh" th:text="#{bedType.nameZhLabel}">Name Zh:</label>
+                                <input type="text" class="form-control" id="bedTypeNameZh">
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" th:text="#{bedType.submit}">Submit</button>
+                                <button id="closeButton" type="button" class="btn btn-default" data-dismiss="modal" th:text="#{bedType.close}">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="bedType-delete-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{bedType.deleteTitle}">Delete bedType</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;"></button>
+                    </div>
+
+                    <div class="modal-body" th:text="#{bedType.confirmDelete}">Are you sure?</div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" id="delete-bedType-confirm-button" class="btn btn-danger" data-dismiss="modal" th:text="#{bedType.delete}">Delete</button>
+                        <button type="button" class="btn btn-secondary room-close-button" data-dismiss="modal" th:text="#{bedType.cancel}">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

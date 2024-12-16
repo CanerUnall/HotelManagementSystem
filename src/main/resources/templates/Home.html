@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta th:replace="~{fragments/head :: metas}"/>
+  <title th:text="#{title}" >Molveno Lake Resort</title>
+  <style th:replace="~{fragments/head :: styles}"/>
+  <script th:replace="~{fragments/head :: scripts}"/>
+</head>
+<body>
+<div class="wrapper">
+  <div class="content">
+
+    <!-- Success Message -->
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+      <span th:text="${successMessage}"></span>
+    </div>
+
+    <!-- Error Message -->
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+      <span th:text="${errorMessage}"></span>
+    </div>
+
+
+    <div th:replace="~{/fragments/navbarFragment :: navbarFragment}"></div>
+
+    <!-- Carousel -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <!-- Dinamik içerik buraya gelecek -->
+      </ol>
+      <div class="carousel-inner">
+        <!-- Dinamik içerik buraya gelecek -->
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only" th:text="#{carousel.previous}">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only" th:text="#{carousel.next}">Next</span>
+      </a>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h2 th:text="#{about.us.title}">About Us</h2>
+            <p id="aboutUsContent">
+              <!-- Dinamik içerik buraya eklenecek -->
+            </p>
+          </div>
+          <div class="col-md-6">
+            <img id="aboutUs_img" class="img-fluid cinili-border" alt="About Us"/>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center" th:text="#{our.services}">Our Services</h2>
+        <div class="row services-carousel" id="services_container">
+          <!-- Dinamik servisler burada eklenecek -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-5">
+      <div class="container">
+        <h2 class="text-center" th:text="#{customer.comments}">Customer Comments</h2>
+        <div class="row mt-4" id="testimonials_container">
+          <!-- Dinamik yorumlar burada eklenecek -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center" th:text="#{contact.us}">Contact Us</h2>
+        <div class="row mt-4">
+          <div class="col-md-8 mx-auto">
+            <form id="contactFormId">
+              <div class="form-group">
+                <label for="name" th:text="#{contact.name}">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter your name"/>
+              </div>
+              <div class="form-group">
+                <label for="emailForMessages" th:text="#{contact.email}">Email</label>
+                <input type="email" class="form-control" id="emailForMessages" placeholder="Enter your email"/>
+              </div>
+              <div class="form-group">
+                <label for="message" th:text="#{contact.message}">Message</label>
+                <textarea class="form-control" id="message" rows="5" placeholder="Enter your message"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" th:text="#{contact.send}">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div th:insert="fragments/footer :: footer"></div>
+
+
+</div>
+</body>
+</html>

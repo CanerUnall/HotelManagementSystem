@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta th:replace="~{fragments/head :: metas}"/>
+  <title th:text="#{profile.title}">User Profile</title>
+  <style th:replace="~{fragments/head :: styles}"/>
+  <link rel="stylesheet" href="/css/profile.css" />
+  <script th:replace="~{fragments/head :: scripts}"/>
+</head>
+<body>
+<div class="wrapper">
+  <div class="content">
+    <div th:replace="~{/fragments/navbarFragment :: navbarFragment}"></div>
+    <div class="container profile-container">
+      <div>
+        <!-- Kullanıcı Adını Gösterme -->
+        <h2>
+          <span th:text="#{profile.welcome}">Welcome</span>,
+          <span sec:authentication="name"></span>!
+        </h2>
+      </div>
+      <form id="profileForm">
+        <input type="hidden" id="userId" name="userId">
+        <div class="form-group">
+          <label for="first_name" th:text="#{profile.firstName}">First Name</label>
+          <input type="text" class="form-control" id="first_name" name="first_name">
+        </div>
+        <div class="form-group">
+          <label for="last_name" th:text="#{profile.lastName}">Last Name</label>
+          <input type="text" class="form-control" id="last_name" name="last_name">
+        </div>
+        <div class="form-group">
+          <label for="email" th:text="#{profile.email}">Email</label>
+          <input type="email" class="form-control" id="email" name="email">
+          <small id="emailHelp" class="form-text text-muted"></small>
+        </div>
+        <div class="form-group password-group">
+          <label for="password" th:text="#{profile.password}">Password</label>
+          <input type="password" class="form-control" id="password" name="password">
+          <div id="toggle-password-container" style="margin-top: 5px;">
+            <i class="fa fa-eye" id="toggle-password" style="cursor: pointer;"></i>
+            <small id="passwordHelp" class="form-text text-muted"></small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="addressStreet" th:text="#{profile.street}">Street:</label>
+          <input type="text" class="form-control" id="addressStreet" name="addressStreet">
+        </div>
+        <div class="form-group">
+          <label for="addressCity" th:text="#{profile.city}">City:</label>
+          <input type="text" class="form-control" id="addressCity" name="addressCity">
+        </div>
+        <div class="form-group">
+          <label for="addressCountry" th:text="#{profile.country}">Country:</label>
+          <input type="text" class="form-control" id="addressCountry" name="addressCountry">
+        </div>
+        <div class="form-group">
+          <label for="addressZip" th:text="#{profile.zipCode}">ZIP Code:</label>
+          <input type="text" class="form-control" id="addressZip" name="addressZip">
+        </div>
+        <div class="form-group">
+          <label for="houseNumber" th:text="#{profile.houseNumber}">House Number:</label>
+          <input type="text" class="form-control" id="houseNumber" name="houseNumber">
+        </div>
+        <div class="form-group">
+          <label for="phoneNumber" th:text="#{profile.phoneNumber}">Phone Number:</label>
+          <input type="number" class="form-control" id="phoneNumber" name="phoneNumber">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" th:text="#{profile.updateProfile}">Update Profile</button>
+      </form>
+    </div>
+  </div>
+  <div th:insert="fragments/footer :: footer"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+<script src="/js/profile.js"></script>
+</body>
+</html>

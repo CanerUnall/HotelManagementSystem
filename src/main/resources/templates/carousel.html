@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta th:replace="~{fragments/head :: metas}"/>
+    <title>Hotel Carousels</title>
+    <style th:replace="~{fragments/head :: styles}"/>
+    <script th:replace="~{fragments/head :: scripts}"/>
+    <!-- myjquery.js has to be BEFORE carousel.js !!!! -->
+    <script th:src="@{js/carousel.js}"></script>
+    <script>
+        $(document).ready(function() {
+            console.log("initializing");
+            init();
+        });
+    </script>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="content">
+        <div th:replace="~{/fragments/navbarFragment :: navbarFragment}">
+
+        </div>
+
+        <div class="container" id="carousel">
+            <h3 th:text="#{carousel.currentCarousels}">Current Hotel carousels in database:</h3>
+            <p/>
+            <table id="carousel-table" class="display mx-auto">
+                <thead>
+                <tr>
+                    <th th:text="#{carousel.id}">Carousel ID</th>
+                    <th th:text="#{carousel.titleTable}">English Title</th>
+                    <th th:text="#{carousel.titleTableZh}">Chinese Title</th>
+                    <th th:text="#{carousel.description}">English Description</th>
+                    <th th:text="#{carousel.descriptionZh}">Chinese Description</th>
+                    <th th:text="#{carousel.image}">Image</th>
+                </tr>
+                </thead>
+            </table>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" id="new-carousel-button" th:text="#{carousel.newCarousel}">New Hotel carousel</button>
+                    <button type="button" class="btn btn-primary" id="edit-carousel-button" th:text="#{carousel.editCarousel}">Edit Hotel carousel</button>
+                    <button type="button" class="btn btn-primary" id="delete-carousel-button" th:text="#{carousel.deleteCarousel}">Delete Hotel carousel</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="carousel-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{carousel.newCarousel}">New carousel</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="carousel-form">
+                            <div class="form-group">
+                                <input type="text" class="d-none form-control" id="carouselId" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="carouselTitle" th:text="#{carousel.carouselName}">Carousel Name:</label>
+                                <input type="text" class="form-control" id="carouselTitle">
+                                <input type="text" class="form-control" id="carouselTitleZh">
+                            </div>
+                            <div class="form-group">
+                                <label for="description" th:text="#{carousel.carouselContent}">Hotel Carousel Content:</label>
+                                <input type="text" class="form-control" id="description">
+                                <input type="text" class="form-control" id="descriptionZh">
+                            </div>
+                            <div class="form-group">
+                                <label for="carouselImg" th:text="#{carousel.currentImage}">Current Image:</label>
+                                <img id="currentImage" src="" width="100px">
+                                <label for="carouselImg" th:text="#{carousel.uploadNewImage}">Upload New Image:</label>
+                                <input type="file" class="form-control" id="carouselImg">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" th:text="#{carousel.submit}">Submit</button>
+                                <button id="closeButton" type="button" class="btn btn-default" data-dismiss="modal" th:text="#{carousel.close}">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="image-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{carousel.image}">Image</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <img id="modal-image" src="" alt="Large Image" style="width:100%;height:auto;">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{carousel.close}">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="carousel-delete-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{carousel.deleteCarousel}">Delete carousel</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;"></button>
+                    </div>
+                    <div class="modal-body" th:text="#{carousel.areYouSure}">
+                        Are you sure?
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" id="delete-carousel-confirm-button" class="btn btn-danger" data-dismiss="modal" th:text="#{carousel.delete}">Delete</button>
+                        <button type="button" class="btn btn-secondary carousel-close-button" data-dismiss="modal" th:text="#{carousel.cancel}">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="messages" style="display: none;">
+            <span id="select-carousel-message" th:text="#{select.carousel.first}">Select Carousel first</span>
+            <span id="carousel-cannot-be-deleted" th:text="#{carousel.cannot.be.deleted}">Select Carousel first</span>
+        </div>
+
+    </div>
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+
+</body>
+</html>

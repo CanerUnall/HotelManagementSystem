@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pages</title>
+
+    <!-- This set will work. Newer versions might lead to strange result, but you can try -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{css/page.css}">
+
+    <!-- myjquery.js has to be BEFORE pages.js !!!! -->
+    <script th:src="@{js/pages.js}"></script>
+
+    <!--
+        We 'connect' an event to a function.
+        When the page is fully loaded by the browser
+        and all the resources are added,
+        this event will fire and the function will be executed.
+        Note: This is asynchronous!!!
+    -->
+    <script>
+        $( document ).ready(function() {
+            console.log( "initializing" );
+            init();
+
+        });
+    </script>
+
+</head>
+<body>
+
+<div class="container" id="page">
+    <!--    page table -->
+    <h3>Current pages in database:</h3>
+
+    <table id="page-table1" class="display mx-auto">
+    </table>
+
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" id="new-page-button">New page</button>
+            <button type="button" class="btn btn-primary" id="edit-page-button">Edit page</button>
+            <button type="button" class="btn btn-primary" id="delete-page-button">Delete page</button>
+        </div>
+    </div>
+
+</div>
+
+<div id="page-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit page</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form id="pageForm">
+                    <div class="form-group">
+                        <input type="number" class="d-none form-control" id="pageId" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="pageName">Page Name:</label>
+                        <input type="text" class="form-control" id="pageName">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content">Content:</label>
+                        <input type="text" class="form-control" id="content">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="photos">Image URL:</label>
+                        <input type="file" id="photos" name="photos" multiple>
+                    </div>
+                    <div id="imageContainer">
+                        <!-- Resimler buraya dinamik olarak eklenecek -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="saveButton">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for showing large image -->
+<div id="image-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Image</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="modal-image" src="" alt="Large Image" style="width:100%;height:auto;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="page-delete-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Page</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                Are you sure?
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" id="delete-page-confirm-button" class="btn btn-danger" data-dismiss="modal">Delete
+                </button>
+                <button type="button" class="btn btn-secondary page-close-button" data-dismiss="modal">Cancel</button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>

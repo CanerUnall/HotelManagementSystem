@@ -1,0 +1,472 @@
+/* main.css */
+.dropdown-menu {
+    display: none;
+}
+.dropdown-menu.show {
+    display: block;
+}
+
+.carouselExampleIndicators {
+    background-color: rgba(0, 0, 0, 0.5); /* Yarı saydam siyah arka plan */
+    color: rgb(245, 242, 242); /* Yazı rengi beyaz */
+}
+
+
+
+#baslik {
+    color: rgb(253, 252, 252);
+    font-size: 2.5rem;
+    text-align: center;
+}
+#a_hp{
+    color: rgb(220, 31, 31);
+    font-weight: bold;
+}
+#b_hp{
+    color:#e6e603;
+    font-weight: bold;
+
+}
+#headerNavbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: #f8f9fa; /* Adjust the background color to match your design */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.language-selector {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 4px;
+}
+.language-selector a {
+    margin: 0 3px;
+    text-decoration: none;
+    color: #000;
+}
+.language-selector a:hover {
+    color: #007BFF;
+}
+.language-selector img {
+    width: 30px;
+    height: auto;
+}
+.carousel-item {
+    height: 100vh;
+    min-height: 300px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.nav-link {
+    position: relative;
+    display: inline-block;
+    padding: 10px 15px;
+    color: #000;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #c31e1e;
+    transition: all 0.3s ease-in-out;
+}
+.nav-link:hover::after {
+    width: 100%;
+    left: 0;
+}
+.nav-link:hover {
+    color: #000;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+.nav-item button {
+    border: none;
+    background: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.nav-item button:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.reservation-form {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(0,0,0,.5);
+}
+.navbar-light .navbar-nav .nav-link:hover {
+    color: rgba(0,0,0,.7);
+}
+#img_user{
+
+
+}
+
+#aboutUs_img{
+
+width: 100%; /* Genişliği tam olarak ayarlamak için */
+  max-width: 300px; /* Maksimum genişlik */
+  height: auto; /* Yükseklik oranını koruyarak otomatik olarak ayarla */
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+}
+
+#about {
+    padding: 50px 0;
+}
+
+#about h2 {
+    color: #d21f1f;
+    margin-bottom: 20px;
+}
+
+#about p {
+    font-size: 1.1rem;
+}
+
+#aboutUs_img {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+}
+
+#services {
+    padding: 50px 0;
+}
+
+#services .icon {
+    color: #d21f1f;
+    margin-bottom: 20px;
+}
+
+#services h3 {
+    margin-bottom: 15px;
+}
+
+#testimonials {
+    padding: 50px 0;
+}
+
+#testimonials .card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+}
+
+#contact {
+    padding: 50px 0;
+}
+
+#contact .form-group label {
+    font-weight: bold;
+}
+
+#contact .btn {
+    background-color: #d21f1f;
+    border: none;
+}
+#h1_1{
+    color:#e6e603;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+     padding-top: 34px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+}
+
+/*
+.footer {
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 10px 0;
+    border-top: 1px solid #dee2e6;
+}
+*/
+
+.carousel-item .text-center {
+  padding: 20px;
+}
+
+/* home.css */
+
+.service-box {
+  text-align: center;
+  padding: 20px;
+  margin: 15px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.service-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-box i {
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.service-box h4 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.service-box p {
+  font-size: 1rem;
+}
+
+
+/* Testimonial Kutucuk Stilleri */
+.testimonial-box {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  height: 150px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.testimonial-box p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  flex-grow: 1; /* Comment kısmının kutucuğun içini doldurmasını sağlar */
+}
+/*
+.testimonial-box footer {
+  font-size: 14px;
+  color: #555;
+  margin-top: 10px;
+  text-align: right;
+}
+*/
+
+/* Slayt gösterisi için */
+#testimonials_container {
+  display: flex;
+  justify-content: center;
+  overflow: hidden; /* Taşmayı gizle */
+}
+
+.testimonial-slide {
+  display: none;
+  flex: 1 0 100%; /* Kutucukların genişliğini ayarlar */
+}
+
+.testimonial-slide.active {
+  display: flex; /* Aktif kutucuklar görünür */
+}
+
+
+#navbar_logo {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+/* Servislerin kaydırılması için gerekli CSS */
+.services-carousel {
+  overflow: hidden; /* Taşmayı gizle */
+  position: relative; /* İçerik yerleşimini sağlamak için */
+  width: 100%; /* Konteyner genişliği */
+}
+
+.services-carousel-inner {
+  display: flex; /* Servisleri yatayda sıralar */
+  flex-direction: row; /* Satır düzeni */
+  transition: transform 0.5s ease; /* Kaydırma animasyonu */
+}
+
+.service-box {
+  flex: 1 0 33.333%; /* Her servis kutusunun genişliği, 3 kutu görünür */
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: center; /* Servis içeriğini ortala */
+}
+
+@media (max-width: 768px) {
+  .service-box {
+    flex: 1 0 50%; /* Mobil ekranlarda iki kolon */
+  }
+}
+
+@media (max-width: 480px) {
+  .service-box {
+    flex: 1 0 100%; /* Mobil ekranlarda tek kolon */
+  }
+
+}
+
+.custom-font1{
+font-family: "Brush Script MT", cursive; font-size: 24px; font-style: normal; font-variant: normal; font-weight: 700;color:#005693; line-height: 26.4px; }
+}
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            color: #333333;
+            padding: 40px 20px;
+            border-top: 1px solid #eaeaea;
+            margin-top:100px
+        }
+
+        .footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .footer .col-md-3 {
+            flex: 1;
+            min-width: 220px;
+            padding: 0 20px;
+        }
+
+        .footer h5 {
+            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            border-bottom: 2px solid #00569c;
+            padding-bottom: 10px;
+            color: #000000;
+        }
+
+        .footer p, .footer ul {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333333;
+        }
+
+        .footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: #00569c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #000000;
+        }
+
+        .footer .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .footer .social-icons a {
+            color: #ffffff;
+            font-size: 18px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .footer .social-icons a.facebook {
+            background-color: #3b5998;
+        }
+
+        .footer .social-icons a.twitter {
+            background-color: #1da1f2;
+        }
+
+        .footer .social-icons a.instagram {
+            background-color: #e4405f;
+        }
+
+        .footer .social-icons a.linkedin {
+            background-color: #0077b5;
+        }
+
+        .footer .social-icons a.youtube {
+            background-color: #ff0000;
+        }
+
+        .footer .social-icons a:hover {
+            transform: scale(1.1);
+        }
+
+        .footer .map {
+            margin-top: 10px;
+            height: 200px;
+            width: 100%;
+        }
+
+        .footer .credits {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #999999;
+            width: 100%;
+        }
+
+        .footer .branding {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .footer .branding img {
+            width: 50px;
+            height: 50px;
+        }
+
+

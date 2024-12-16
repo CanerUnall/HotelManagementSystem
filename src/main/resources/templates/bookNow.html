@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta th:replace="~{fragments/head :: metas}"/>
+  <title>Book Now</title>
+  <style th:replace="~{fragments/head :: styles}"/>
+  <script th:replace="~{fragments/head :: scripts}"/>
+
+  <link rel="stylesheet" href="/css/bookNow.css"/>
+
+  <script src="/js/bookNow.js"></script>
+  <style>
+    .step-header.disabled {
+      pointer-events: none;
+      opacity: 0.65;
+    }
+
+  </style>
+  <script>
+    $(document).ready(function() {
+      $('.step-header').on('click', function() {
+        var target = $(this).data('target');
+        $('.step-content').removeClass('active');
+        $(target).addClass('active');
+      });
+
+      init();
+    });
+  </script>
+</head>
+<body>
+
+<div class="wrapper">
+  <div class="content">
+    <div th:replace="~{/fragments/navbarFragment :: navbarFragment}"></div>
+    <div class="container" style="margin-top: 30px;">
+      <!-- Step headers -->
+      <div class="row mb-3">
+        <div class="col-4 step-header btn btn-primary" data-target="#step1" th:text="#{bookNow.selectRoom}">
+          Select a Room
+        </div>
+        <div class="col-4 step-header btn btn-secondary disabled" data-target="#step2" id="step2Button" th:text="#{bookNow.guestInfo}">
+          Guest Information
+        </div>
+        <div class="col-4 step-header btn btn-secondary disabled" data-target="#step3" id="step3Button" th:text="#{bookNow.reservationSummary}">
+          Reservation Summary
+        </div>
+      </div>
+
+      <!-- Step 1: Room Selection -->
+      <div id="step1" class="step-content active">
+        <div class="row mb-3 top-filter">
+          <div class="col">
+            <label for="checkIn" th:text="#{bookNow.checkInDate}">Check-in Date:</label>
+            <input type="datetime-local" id="checkIn" class="form-control" required/>
+          </div>
+          <div class="col">
+            <label for="checkOut" th:text="#{bookNow.checkOutDate}">Check-out Date:</label>
+            <input type="datetime-local" id="checkOut" class="form-control" required/>
+          </div>
+          <div class="col">
+            <label for="adults" th:text="#{bookNow.countOfAdults}">Count of Adults:</label>
+            <input type="number" id="adults" class="form-control" min="1" max="10" required/>
+          </div>
+          <div class="col">
+            <label for="children" th:text="#{bookNow.countOfChildren}">Count of Children:</label>
+            <input type="number" id="children" class="form-control"  min="0" max="2" required/>
+          </div>
+          <div class="col">
+            <label for="roomType" th:text="#{bookNow.category}">Category:</label>
+            <select id="roomType" class="form-control">
+              <option value="Select Category" disabled selected th:text="#{bookNow.category}">Select Category</option>
+            </select>
+          </div>
+          <div class="col">
+            <button class="btn btn-primary" id="searchRoomsButton" th:text="#{bookNow.search}">Search</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-3">
+            <h5 th:text="#{bookNow.filters}">Filters</h5>
+            <div id="accordion">
+              <!-- Smoking Filter -->
+              <div class="card">
+                <div class="card-header" id="smokingHeading">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseSmoking" aria-expanded="true" aria-controls="collapseSmoking" th:text="#{bookNow.smoking}">
+                      Smoking
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseSmoking" class="collapse" aria-labelledby="smokingHeading" data-parent="#accordion">
+                  <div class="card-body">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="smokingCheckbox">
+                      <label class="form-check-label" for="smokingCheckbox" th:text="#{bookNow.smoking}">Smoking</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Facilities Filter -->
+              <div class="card">
+                <div class="card-header" id="facilitiesHeading">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFacilities" aria-expanded="false" aria-controls="collapseFacilities" th:text="#{bookNow.facilities}">
+                      Facilities
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseFacilities" class="collapse" aria-labelledby="facilitiesHeading" data-parent="#accordion">
+                  <div class="card-body" id="facilities">
+                    <!-- Checkboxlar buraya dinamik olarak eklenecek -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bed Type Filter -->
+              <div class="card">
+                <div class="card-header" id="bedTypeHeading">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseBedType" aria-expanded="false" aria-controls="collapseBedType" th:text="#{bookNow.bedType}">
+                      Bed Type
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseBedType" class="collapse" aria-labelledby="bedTypeHeading" data-parent="#accordion">
+                  <div class="card-body" id="bedTypes">
+                    <!-- BedTypler buraya dinamik olarak eklenecek -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Floor Filter -->
+              <div class="card">
+                <div class="card-header" id="floorHeading">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFloor" aria-expanded="false" aria-controls="collapseFloor" th:text="#{bookNow.floor}">
+                      Floor
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseFloor" class="collapse" aria-labelledby="floorHeading" data-parent="#accordion">
+                  <div class="card-body">
+                    <input type="number" id="floor" class="form-control"  min="1" max="5">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Disabled Friendly Filter -->
+              <div class="card">
+                <div class="card-header" id="disabledFriendlyHeading">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseDisabledFriendly" aria-expanded="false" aria-controls="collapseDisabledFriendly" th:text="#{bookNow.disabledFriendly}">
+                      Disabled Friendly
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseDisabledFriendly" class="collapse" aria-labelledby="disabledFriendlyHeading" data-parent="#accordion">
+                  <div class="card-body">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="disabledFriendly" id="disabledFriendly">
+                      <label class="form-check-label" for="disabledFriendly" th:text="#{bookNow.disabledFriendly}">Disabled Friendly</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary mt-3" id="applyFiltersButton" th:text="#{bookNow.applyFilters}">Apply Filters</button>
+          </div>
+
+          <div class="col-9">
+            <div id="roomList" class="row"></div>
+            <div id="loader" class="text-center" style="display: none;">
+              <!-- Loader -->
+            </div>
+            <div class="text-center mt-4" id="loadMoreContainer" style="display: none;">
+              <button id="loadMoreBtn" class="btn btn-primary" th:text="#{bookNow.loadMoreRooms}">Load More Rooms</button>
+            </div>
+          </div>
+
+          <!-- Modal -->
+          <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+            <div class="modal-content" id="galleryModalContent"></div>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Guest Information -->
+      <div id="step2" class="step-content">
+        <div id="guestDetails" class="mt-5">
+          <h5 th:text="#{bookNow.guestInfo}">Guest Information</h5>
+          <button class="btn btn-success" id="reservationSummaryButton" th:text="#{bookNow.goToSummaryButton}">Go to Reservation Summary</button>
+          <div id="guestInfoForm">
+            <!-- Guest information forms will be generated here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Reservation Summary -->
+      <div id="step3" class="step-content">
+        <div id="completeReservation" class="mt-5">
+          <h5 th:text="#{bookNow.reservationSummary}">Reservation Summary</h5>
+          <div id="reservationMessage"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rezervasyon Özeti Modal -->
+    <div class="modal fade" id="reservationSummaryModal" tabindex="-1" role="dialog" aria-labelledby="reservationSummaryModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="reservationSummaryModalLabel" th:text="#{bookNow.reservationSummary}">Reservation Summary</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="reservationSummaryContent"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{bookNow.close}">Close</button>
+            <button type="button" class="btn btn-primary" id="confirmReservationButton" th:text="#{bookNow.completeReservation}">Confirm Reservation</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Info Modal -->
+    <div id="checkinCheckoutInfoModal" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Important Information About Your Stay</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Dear Guest,</p>
+            <p>
+              Please be informed that the earliest check-in time is at 2:00 PM, and the latest check-out time is at 10:00 AM.
+              Should you wish to check-in before 2:00 PM, you will need to reserve the previous night. Similarly, if you wish
+              to check-out after 10:00 AM, you will need to reserve the following night as well.
+            </p>
+            <p>
+              We appreciate your understanding and cooperation. Should you have any questions or require further assistance,
+              please do not hesitate to contact us.
+            </p>
+            <p>Sincerely,<br>The Hotel Management</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--信息模态框 -->
+    <div id="checkinCheckoutInfoModalZh" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">关于您住宿的重要信息</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="关闭">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>尊敬的客人，</p>
+            <p>
+              请注意，最早的入住时间为下午2:00，最晚的退房时间为上午10:00。
+              如果您希望在下午2:00之前入住，您需要预订前一晚。同样，如果您希望在上午10:00之后退房，您也需要预订接下来的晚上。
+            </p>
+            <p>
+              我们感谢您的理解与合作。如有任何问题或需要进一步的帮助，请随时联系我们。
+            </p>
+            <p>此致，<br>酒店管理团队</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Hidden message placeholders for translations -->
+    <div id="messages" style="display: none;">
+
+      <span id="msg_datesInPastMessage" th:text="#{datesInPastMessage}"></span>
+      <span id="msg_checkInAfterCheckOutMessage" th:text="#{checkInAfterCheckOutMessage}"></span>
+      <span id="msg_checkInSameAsCheckOutMessage" th:text="#{checkInSameAsCheckOutMessage}"></span>
+
+      <span id="msg_priceRecalculatedMessage" th:text="#{priceRecalculatedMessage}"></span>
+      <span id="msg_cancellationFeeMessage" th:text="#{cancellationFeeMessage}"></span>
+      <span id="msg_noRefundMessage" th:text="#{noRefundMessage}"></span>
+      <span id="msg_cancellationFeeTextMessage" th:text="#{cancellationFeeTextMessage}"></span>
+      <span id="msg_reservationModificationCancelledMessage" th:text="#{reservationModificationCancelledMessage}"></span>
+
+      <span id="msg_primaryGuestMissingMessage" th:text="#{primaryGuestMissingMessage}"></span>
+      <span id="msg_guestMissingMessage" th:text="#{guestMissingMessage}"></span>
+      <span id="msg_childMissingMessage" th:text="#{childMissingMessage}"></span>
+
+      <span id="msg_fillRequiredFieldsMessage" th:text="#{fillRequiredFieldsMessage}"></span>
+
+      <span id="msg_selectRoomMessage" th:text="#{bookNow.selectRoom}"></span>
+      <span id="msg_guestInfoMessage" th:text="#{bookNow.guestInfo}"></span>
+      <span id="msg_reservationSummaryMessage" th:text="#{bookNow.reservationSummary}"></span>
+      <span id="msg_noRoomsFoundMessage" th:text="#{bookNow.noRoomsFound}"></span>
+      <span id="msg_fillDatesMessage" th:text="#{bookNow.validation.fillDates}"></span>
+      <span id="msg_adultsMinimumMessage" th:text="#{bookNow.validation.adultsMinimum}"></span>
+      <span id="msg_datesAdjustedMessage" th:text="#{bookNow.validation.datesAdjusted}"></span>
+      <span id="msg_roomNotAvailableMessage" th:text="#{bookNow.validation.noRoomsAvailable}"></span>
+      <span id="msg_reservationCancelledMessage" th:text="#{bookNow.confirmation.cancelReservation}"></span>
+      <span id="msg_errorLoadingRoomsMessage" th:text="#{bookNow.error.loadingRooms}"></span>
+      <span id="msg_reservationCreatedMessage" th:text="#{bookNow.success.reservationCreated}"></span>
+      <span id="msg_reservationFailedMessage" th:text="#{bookNow.error.reservationFailed}"></span>
+      <span id="msg_errorAvailabilityCheckMessage" th:text="#{bookNow.error.availabilityCheck}"></span>
+
+      <span id="msg_priceLabel" th:text="#{price.label}">Price</span>
+      <span id="msg_descriptionLabel" th:text="#{description.label}">Description</span>
+      <span id="msg_facilitiesLabel" th:text="#{facilities.label}">Facilities</span>
+      <span id="msg_smokingLabel" th:text="#{smoking.label}">Smoking</span>
+      <span id="msg_smokingAllowedMessage" th:text="#{smoking.allowed}">Allowed</span>
+      <span id="msg_smokingNotAllowedMessage" th:text="#{smoking.not.allowed}">Not Allowed</span>
+      <span id="msg_bedsLabel" th:text="#{beds.label}">Beds</span>
+      <span id="msg_adultsLabel" th:text="#{adults.label}">Adults</span>
+      <span id="msg_childrenLabel" th:text="#{children.label}">Children</span>
+      <span id="msg_floorLabel" th:text="#{floor.label}">Floor</span>
+      <span id="msg_selectRoomLabel" th:text="#{select.room.label}">Select Room</span>
+      <span id="msg_selectedRoomLabel" th:text="#{selected.room.label}">Selected Room</span>
+      <span id="msg_additionalPhotosLabel" th:text="#{additional.photos.label}">+{count} more</span>
+
+      <span id="msg_selectRoom_selectedRoomLabel" th:text="#{selected.room.label}">Selected Room</span>
+      <span id="msg_selectRoom_selectRoomLabel" th:text="#{select.room.label}">Select Room</span>
+      <span id="msg_selectRoom_maxAdultsReachedMessage" th:text="#{max.adults.reached.message}">You have reached the maximum number of adults for this room.</span>
+      <span id="msg_selectRoom_maxChildrenReachedMessage" th:text="#{max.children.reached.message}">You have reached the maximum number of children for this room.</span>
+      <span id="msg_selectRoom_primaryGuestLabel" th:text="#{primary.guest.label}">Guest 1 (Primary Guest)</span>
+      <span id="msg_selectRoom_firstNameLabel" th:text="#{first.name.label}">First Name</span>
+      <span id="msg_selectRoom_lastNameLabel" th:text="#{last.name.label}">Last Name</span>
+      <span id="msg_selectRoom_phoneNumberLabel" th:text="#{phone.number.label}">Phone Number</span>
+      <span id="msg_selectRoom_emailLabel" th:text="#{email.label}">Email Address</span>
+      <span id="msg_selectRoom_streetLabel" th:text="#{street.label}">Street</span>
+      <span id="msg_selectRoom_cityLabel" th:text="#{city.label}">City</span>
+      <span id="msg_selectRoom_countryLabel" th:text="#{country.label}">Country</span>
+      <span id="msg_selectRoom_zipCodeLabel" th:text="#{zip.code.label}">ZIP Code</span>
+      <span id="msg_selectRoom_houseNumberLabel" th:text="#{house.number.label}">House Number</span>
+      <span id="msg_selectRoom_addAdultGuestLabel" th:text="#{add.adult.guest.label}">Add Adult Guest</span>
+      <span id="msg_selectRoom_addChildLabel" th:text="#{add.child.label}">Add Child</span>
+
+      <span id="msg_createGuestCard_adultLabel" th:text="#{createGuestCard_adultLabel}">Adult</span>
+      <span id="msg_createGuestCard_childLabel" th:text="#{createGuestCard_childLabel}">Child</span>
+      <span id="msg_createGuestCard_firstNameLabel" th:text="#{createGuestCard_firstNameLabel}">First Name</span>
+      <span id="msg_createGuestCard_lastNameLabel" th:text="#{createGuestCard_lastNameLabel}">Last Name</span>
+      <span id="msg_createGuestCard_removeLabel" th:text="#{createGuestCard_removeLabel}">Remove</span>
+
+      <span id="msg_displayReservationSummary_roomNumberLabel" th:text="#{reservation.summary.room.number.label}">Room Number</span>
+      <span id="msg_displayReservationSummary_checkInDateLabel" th:text="#{reservation.summary.checkin.date.label}">Check-in Date</span>
+      <span id="msg_displayReservationSummary_checkOutDateLabel" th:text="#{reservation.summary.checkout.date.label}">Check-out Date</span>
+      <span id="msg_displayReservationSummary_pricePerNightLabel" th:text="#{reservation.summary.price.per.night.label}">Price per Night</span>
+      <span id="msg_displayReservationSummary_totalPriceLabel" th:text="#{reservation.summary.total.price.label}">Total Price</span>
+      <span id="msg_displayReservationSummary_cancellationFeeLabel" th:text="#{reservation.summary.cancellation.fee.label}">Cancellation Fee</span>
+      <span id="msg_displayReservationSummary_guestsLabel" th:text="#{reservation.summary.guests.label}">Guests</span>
+      <span id="msg_displayReservationSummary_childrenLabel" th:text="#{reservation.summary.children.label}">Children</span>
+      <span id="msg_displayReservationSummary_completeReservationLabel" th:text="#{reservation.summary.complete.reservation.label}">Complete Reservation</span>
+
+      <span id="msg_checkRoomAvailability_roomAvailableMessage" th:text="#{room.available.message}">Room is available for the selected date range.</span>
+      <span id="msg_checkRoomAvailability_roomNotAvailableMessage" th:text="#{room.not.available.message}">Room is not available for the selected date range. Please choose another date.</span>
+      <span id="msg_checkRoomAvailability_errorCheckingAvailabilityMessage" th:text="#{room.availability.error.message}">Error checking room availability.</span>
+
+      <span id="msg_displaySelectedRoom_priceLabel" th:text="#{price.label}">Price</span>
+      <span id="msg_displaySelectedRoom_descriptionLabel" th:text="#{description.label}">Description</span>
+      <span id="msg_displaySelectedRoom_facilitiesLabel" th:text="#{facilities.label}">Facilities</span>
+      <span id="msg_displaySelectedRoom_smokingAllowedLabel" th:text="#{smoking.allowed}">Allowed</span>
+      <span id="msg_displaySelectedRoom_smokingNotAllowedLabel" th:text="#{smoking.not.allowed}">Not Allowed</span>
+      <span id="msg_displaySelectedRoom_bedsLabel" th:text="#{beds.label}">Beds</span>
+      <span id="msg_displaySelectedRoom_adultsLabel" th:text="#{adults.label}">Adults</span>
+      <span id="msg_displaySelectedRoom_childrenLabel" th:text="#{children.label}">Children</span>
+      <span id="msg_displaySelectedRoom_floorLabel" th:text="#{floor.label}">Floor</span>
+      <span id="msg_displaySelectedRoom_selectedRoomLabel" th:text="#{selected.room.label}">Selected Room</span>
+
+      <span id="reservationSuccessMessage" th:text="#{reservation.success.message}"></span>
+      <span id="reservationEditSuccessMessage" th:text="#{reservation.edit.success.message}"></span>
+      <span id="msg_displaySelectedRoom_disabledLabel" th:text="#{disabled}"></span>
+      <span id="msg_yes" th:text="#{yes}"></span>
+      <span id="msg_no" th:text="#{no}"></span>
+
+      <!-- The information entered does not match the current user information -->
+      <span id="msg_userInfoMismatch" th:text="#{user.info.mismatch}"></span>
+
+
+      <!-- Please correct the email address before completing the reservation -->
+      <span id="msg_reservationEmailCorrect" th:text="#{reservation.email.correct}"></span>
+
+
+      <!-- Please correct the email address before proceeding -->
+      <span id="msg_emailCorrect" th:text="#{email.correct}"></span>
+
+      <!-- Hidden Spans for Modal Content -->
+      <span id="modalTitle" th:text="#{modal.title}" style="display: none;"></span>
+
+
+      <span id="modalGreeting" th:text="#{modal.greeting}" style="display: none;"></span>
+
+
+      <span id="modalCheckinCheckoutInfo" th:text="#{modal.checkinCheckoutInfo}" style="display: none;"></span>
+
+
+      <span id="modalAppreciation" th:text="#{modal.appreciation}" style="display: none;"></span>
+
+
+      <span id="modalClosing" th:text="#{modal.closing}" style="display: none;"></span>
+
+
+      <span id="modalSignature" th:text="#{modal.signature}" style="display: none;"></span>
+
+
+      <span id="modalCloseButton" th:text="#{modal.closeButton}" style="display: none;"></span>
+
+
+
+
+
+    </div>
+
+
+  </div>
+  <div th:insert="fragments/footer :: footer"></div>
+</div>
+
+</body>
+</html>

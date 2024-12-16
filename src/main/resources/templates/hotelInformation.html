@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta th:replace="~{fragments/head :: metas}"/>
+    <title th:text="#{hotelInformation.title}">Hotel Information</title>
+    <style th:replace="~{fragments/head :: styles}"/>
+    <script th:replace="~{fragments/head :: scripts}"/>
+    <script th:src="@{js/hotelInformation.js}"></script>
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .modal-body label {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="content">
+        <div th:replace="~{/fragments/navbarFragment :: navbarFragment}"></div>
+
+        <div class="container">
+            <div id="hotel-info">
+                <h2 th:text="#{hotelInformation.title}">Hotel Information</h2>
+                <div id="hotel-details">
+                    <div class="form-group">
+                        <span id="hotelId" style="display:none;"></span>
+                    </div>
+                    <div class="form-group">
+                        <label th:text="#{hotelInformation.name}">Hotel Name:</label>
+                        <span id="hotelName"></span>
+                    </div>
+                    <div class="form-group">
+                        <strong th:text="#{hotelInformation.country}">Country:</strong>
+                        <span id="country"></span>,
+                        <strong th:text="#{hotelInformation.city}">City:</strong>
+                        <span id="city"></span>
+                    </div>
+                    <div class="form-group">
+                        <strong th:text="#{hotelInformation.street}">Street:</strong>
+                        <span id="street"></span>,
+                        <strong th:text="#{hotelInformation.houseNumber}">House Number:</strong>
+                        <span id="houseNumber"></span>,
+                        <strong th:text="#{hotelInformation.zipCode}">ZIP Code:</strong>
+                        <span id="zipCode"></span>
+                    </div>
+                    <div class="form-group">
+                        <label th:text="#{hotelInformation.phoneNumber}">Phone Number:</label>
+                        <span id="phoneNumber"></span>
+                    </div>
+                    <div class="form-group">
+                        <label th:text="#{hotelInformation.email}">Email:</label>
+                        <span id="email"></span>
+                    </div>
+                    <div class="form-group">
+                        <label th:text="#{hotelInformation.facebook}">Facebook:</label>
+                        <span id="facebook"></span>
+                    </div>
+                    <div class="form-group">
+                        <label th:text="#{hotelInformation.twitter}">Twitter:</label>
+                        <span id="twitter"></span>
+                    </div>
+                    <div class="form-group">
+                        <label th:text="#{hotelInformation.instagram}">Instagram:</label>
+                        <span id="instagram"></span>
+                    </div>
+                    <div class="form-group">
+                        <label th:text="#{hotelInformation.restaurant}">Restaurant:</label>
+                        <span id="restaurant"></span>
+                    </div>
+                </div>
+                <button id="edit-button" data-toggle="modal" data-target="#editModal" th:text="#{hotelInformation.edit}">Edit</button>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel" th:text="#{hotelInformation.editTitle}">Edit Hotel Information</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="hotelForm">
+                            <div class="form-group" style="display:none;">
+                                <input type="text" id="editHotelId" name="hotelId" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editHotelName" th:text="#{hotelInformation.name}">Hotel Name:</label>
+                                <input type="text" id="editHotelName" name="hotelName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editCountry" th:text="#{hotelInformation.country}">Country:</label>
+                                <input type="text" id="editCountry" name="country" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editCity" th:text="#{hotelInformation.city}">City:</label>
+                                <input type="text" id="editCity" name="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editStreet" th:text="#{hotelInformation.street}">Street:</label>
+                                <input type="text" id="editStreet" name="street" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editHouseNumber" th:text="#{hotelInformation.houseNumber}">House Number:</label>
+                                <input type="text" id="editHouseNumber" name="houseNumber" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editZipCode" th:text="#{hotelInformation.zipCode}">ZIP Code:</label>
+                                <input type="text" id="editZipCode" name="zipCode" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editPhoneNumber" th:text="#{hotelInformation.phoneNumber}">Phone Number:</label>
+                                <input type="text" id="editPhoneNumber" name="phoneNumber" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editEmail" th:text="#{hotelInformation.email}">Email:</label>
+                                <input type="email" id="editEmail" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editFacebook" th:text="#{hotelInformation.facebook}">Facebook:</label>
+                                <input type="text" id="editFacebook" name="facebook">
+                            </div>
+                            <div class="form-group">
+                                <label for="editTwitter" th:text="#{hotelInformation.twitter}">Twitter:</label>
+                                <input type="text" id="editTwitter" name="twitter">
+                            </div>
+                            <div class="form-group">
+                                <label for="editInstagram" th:text="#{hotelInformation.instagram}">Instagram:</label>
+                                <input type="text" id="editInstagram" name="instagram">
+                            </div>
+                            <div class="form-group">
+                                <label for="editRestaurant" th:text="#{hotelInformation.restaurant}">Restaurant:</label>
+                                <input type="text" id="editRestaurant" name="restaurant">
+                            </div>
+                            <button type="submit" class="btn btn-success" th:text="#{hotelInformation.save}">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+
+</body>
+</html>

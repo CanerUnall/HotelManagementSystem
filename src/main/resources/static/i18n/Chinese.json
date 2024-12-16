@@ -1,0 +1,137 @@
+{
+	"emptyTable":     "表中数据为空",
+	"info":           "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+	"infoEmpty":      "显示第 0 至 0 项结果，共 0 项",
+	"infoFiltered":   "(由 _MAX_ 项结果过滤)",
+	"infoThousands":  ",",
+	"lengthMenu":     "显示 _MENU_ 项结果",
+	"loadingRecords": "载入中...",
+	"processing":     "处理中...",
+	"search":         "搜索:",
+	"zeroRecords":    "没有匹配结果",
+	"thousands": ",",
+	"paginate": {
+		"first":    "首页",
+		"last":     "末页",
+		"next":     "下页",
+		"previous": "上页"
+	},
+	"aria": {
+		"sortAscending":  ": 以升序排列此列",
+		"sortDescending": ": 以降序排列此列"
+	},
+	"autoFill": {
+		"cancel": "取消",
+		"fill": "用<i>%d</i>填充所有单元格",
+		"fillHorizontal": "水平填充单元格",
+		"fillVertical": "垂直填充单元格"
+	},
+	"buttons": {
+		"collection": "集合 <span class='ui-button-icon-primary ui-icon ui-icon-triangle-1-s'/>",
+		"colvis": "列可见性",
+		"colvisRestore": "恢复可见性",
+		"copy": "复制",
+		"copyKeys": "按 ctrl 或 u2318 + C 将表格数据复制到系统剪贴板。<br><br>要取消，请点击此消息或按 escape。",
+		"copySuccess": {
+			"1": "已复制 1 行到剪贴板",
+			"_": "已复制 %d 行到剪贴板"
+		},
+		"copyTitle": "复制到剪贴板",
+		"csv": "CSV",
+		"excel": "Excel",
+		"pageLength": {
+			"-1": "显示所有行",
+			"1": "显示 1 行",
+			"_": "显示 %d 行"
+		},
+		"pdf": "PDF",
+		"print": "打印"
+	},
+	"searchBuilder": {
+		"add": "添加条件",
+		"button": {
+			"0": "搜索生成器",
+			"_": "搜索生成器 (%d)"
+		},
+		"clearAll": "清除所有",
+		"condition": "条件",
+		"conditions": {
+			"date": {
+				"after": "之后",
+				"before": "之前",
+				"between": "之间",
+				"empty": "空的",
+				"equals": "等于",
+				"not": "不等于",
+				"notBetween": "不在之间",
+				"notEmpty": "不为空"
+			},
+			"moment": {
+				"after": "之后",
+				"before": "之前",
+				"between": "之间",
+				"empty": "空的",
+				"equals": "等于",
+				"not": "不等于",
+				"notBetween": "不在之间",
+				"notEmpty": "不为空"
+			},
+			"number": {
+				"between": "之间",
+				"empty": "空的",
+				"equals": "等于",
+				"gt": "大于",
+				"gte": "大于等于",
+				"lt": "小于",
+				"lte": "小于等于",
+				"not": "不等于",
+				"notBetween": "不在之间",
+				"notEmpty": "不为空"
+			},
+			"string": {
+				"contains": "包含",
+				"empty": "空的",
+				"endsWith": "以...结尾",
+				"equals": "等于",
+				"not": "不等于",
+				"notEmpty": "不为空",
+				"startsWith": "以...开头"
+			}
+		},
+		"data": "数据",
+		"deleteTitle": "删除过滤规则",
+		"leftTitle": "减少缩进",
+		"logicAnd": "与",
+		"logicOr": "或",
+		"rightTitle": "增加缩进",
+		"title": {
+			"0": "搜索生成器",
+			"_": "搜索生成器 (%d)"
+		},
+		"value": "值"
+	},
+	"searchPanes": {
+		"clearMessage": "清除所有",
+		"collapse": {
+			"0": "搜索窗格",
+			"_": "搜索窗格 (%d)"
+		},
+		"count": "{total}",
+		"countFiltered": "{shown} ({total})",
+		"emptyPanes": "没有搜索窗格",
+		"loadMessage": "载入搜索窗格",
+		"title": "活动过滤器 - %d"
+	},
+	"select": {
+		"1": "已选择 %d 行",
+		"_": "已选择 %d 行",
+		"cells": {
+			"1": "已选择 1 个单元格",
+			"_": "已选择 %d 个单元格"
+		},
+		"columns": {
+			"1": "已选择 1 列",
+			"_": "已选择 %d 列"
+		}
+	}
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{footer.contactUs}">Footer Fragment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/js/footer.js"></script>
+</head>
+<body>
+<div th:fragment="footer">
+    <footer class="footer">
+        <div class="container">
+            <div class="col-md-3">
+                <h5 th:text="#{footer.contactUs}">Contact Us</h5>
+                <p>
+                    <span id="hotelNameFooter" ></span> <br>
+                    <span id="streetFooter" ></span> <br>
+                    <span id="cityFooter" ></span> <br>
+                    <span id="countryFooter"></span> <br>
+                    <span th:text="#{footer.email}">Email:</span> <a id="emailFooter" href="mailto:info@molvenoresort.com">info@molvenoresort.com</a><br>
+                    <span th:text="#{footer.phone}">Phone:</span> <a id="phoneFooter" href="tel:+11234567890">(123) 456-7890</a>
+                </p>
+            </div>
+            <div class="col-md-3">
+                <h5 th:text="#{footer.quickLinks}">Quick Links</h5>
+                <ul>
+                    <li><a href="http://localhost:8080/#about" th:text="#{footer.aboutUs}">About Us</a></li>
+                    <li><a href="http://localhost:8080/#services" th:text="#{footer.services}">Services</a></li>
+                    <li><a href="http://localhost:8080/#testimonials" th:text="#{footer.testimonials}">Testimonials</a></li>
+                    <li><a href="http://localhost:8080/#contact" th:text="#{footer.contact}">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5 th:text="#{footer.followUs}">Follow Us</h5>
+                <div class="social-icons">
+                    <a id="facebook" href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a id="twitter" href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+                    <a id="instagram" href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5 th:text="#{footer.ourLocation}">Our Location</h5>
+                <div class="map">
+                    <iframe id="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2771.2906938258433!2d10.965460315380253!3d46.14032897911447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4779315b2a7d57d7%3A0x5090e8c0ff74b8a2!2sVia%20Bettega%2C%2012%2C%2038018%20Molveno%20TN%2C%20Italy!5e0!3m2!1sen!2sus!4v1690906356884!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="credits">
+            <div class="branding">
+                <img th:src="@{/img/mainPage/CompanyLogo.jpg}" th:alt="#{footer.companyLogoAlt}" />
+                <span>© 2024 Molveno Lake Resort. <span th:text="#{footer.allRightsReserved}">All rights reserved.</span></span>
+            </div>
+        </div>
+    </footer>
+</div>
+
+</body>
+</html>

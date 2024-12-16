@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+
+    <meta th:replace="~{fragments/head :: metas}"/>
+    <title th:text="#{reservation.title1}">Reservations</title>
+    <style th:replace="~{fragments/head :: styles}"/>
+    <script th:replace="~{fragments/head :: scripts}"/>
+
+    <script th:src="@{js/myReservation.js}"></script>
+    <script>
+        $(document).ready(function() {
+            init();
+        });
+    </script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="content">
+        <div th:replace="~{/fragments/navbarFragment :: navbarFragment}"></div>
+        <div class="container" id="reservation">
+            <h3 th:text="#{reservation.current}">Current reservations in database:</h3>
+            <table id="reservation-table1" class="display mx-auto">
+                <thead>
+                <tr>
+                    <th th:text="#{reservation.reservationID}">Reservation ID</th>
+                    <th th:text="#{reservation.roomNumber}">Room Number</th>
+                    <th th:text="#{reservation.guestEmail}">Email</th>
+                    <th th:text="#{reservation.guestList}">Guest List</th>
+                    <th th:text="#{reservation.totalPrice}">Total Price</th>
+                    <th th:text="#{reservation.canceled}">Canceled</th>
+                    <th th:text="#{reservation.cancellationFee}">Cancellation Fee</th>
+                    <th th:text="#{reservation.checkInDate}">Check-in Date</th>
+                    <th th:text="#{reservation.checkOutDate}">Check-out Date</th>
+                    <th th:text="#{reservation.transactionDate}">Transaction Date</th>
+                    <th th:text="#{reservation.checkinDate}">Checked In Date</th>
+                    <th th:text="#{reservation.checkoutDate}">Checked Out Date</th>
+                </tr>
+                </thead>
+            </table>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" id="new-reservation-button" th:text="#{reservation.new}">New Reservation</button>
+                    <button type="button" class="btn btn-primary" id="edit-reservation-button" th:text="#{reservation.edit}">Edit Reservation</button>
+                    <button type="button" class="btn btn-primary" id="cancel-reservation-button" th:text="#{reservation.cancel1}">Cancel Reservation</button>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!--        <div id="reservation-cancel-modal" class="modal fade" role="dialog">-->
+        <!--            <div class="modal-dialog">-->
+        <!--                <div class="modal-content">-->
+        <!--                    <div class="modal-header">-->
+        <!--                        <h4 class="modal-title" th:text="#{reservation.cancelTitle}">Cancel Reservation</h4>-->
+        <!--                        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+        <!--                    </div>-->
+        <!--                    <div class="modal-body" th:text="#{reservation.areYouSure}">Are you sure?</div>-->
+        <!--                    <div class="modal-footer justify-content-center">-->
+        <!--                        <button type="button" id="cancel-reservation-confirm-button" class="btn btn-danger" data-dismiss="modal" th:text="#{reservation.cancel}">Cancel</button>-->
+        <!--                        <button type="button" class="btn btn-secondary room-close-button" data-dismiss="modal" th:text="#{reservation.cancel2}">Cancel</button>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        <div id="reservation-details-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" th:text="#{reservation.detailsTitle}">Reservation Details</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 th:text="#{reservation.adults}">Adults:</h5>
+                        <ul id="adult-names-list">
+                            <!-- Yetişkin isimleri burada gösterilecek -->
+                        </ul>
+                        <h5 th:text="#{reservation.children}">Children:</h5>
+                        <ul id="child-names-list">
+                            <!-- Çocuk isimleri burada gösterilecek -->
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{reservation.close}">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div id="cancellationPolicyModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Important Information Regarding Your Reservation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Dear Valued Guest,</p>
+                        <p>
+                            If you wish to modify your reservation, please be aware of the following terms:
+                        </p>
+                        <ul>
+                            <li>Up to 20 working days before the check-in date: <strong>No cancellation fee (0%)</strong></li>
+                            <li>20 to 10 working days before the check-in date: <strong>50% of the agreed price</strong></li>
+                            <li>Less than 10 working days before the check-in date: <strong>100% of the agreed price</strong></li>
+                        </ul>
+                        <p>
+                            These conditions apply if your edits involve reducing or restricting your booking (such as decreasing the number of nights or guests).
+                            However, if you wish to expand or enhance your reservation (e.g., adding more nights or services), no cancellation fees will apply.
+                        </p>
+                        <p>
+                            We kindly ask for your understanding and cooperation in this matter. Should you have any questions or need assistance, please do not hesitate to reach out to us.
+                            We are here to help ensure your stay is as pleasant and hassle-free as possible.
+                        </p>
+                        <p>Sincerely,<br>The Hotel Management</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--模态框-->
+        <div id="cancellationPolicyModalZh" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">关于您的预订的重要信息</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="关闭">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>尊敬的贵宾，</p>
+                        <p>
+                            如果您希望修改预订，请注意以下条款：
+                        </p>
+                        <ul>
+                            <li>入住日期前20个工作日内：<strong>无取消费用（0%）</strong></li>
+                            <li>入住日期前20至10个工作日内：<strong>收取商定价格的50%</strong></li>
+                            <li>入住日期前10个工作日内：<strong>收取商定价格的100%</strong></li>
+                        </ul>
+                        <p>
+                            这些条件适用于减少或限制您的预订（如减少入住天数或人数）。然而，如果您希望扩展或增强您的预订（例如增加入住天数或服务），则不适用取消费用。
+                        </p>
+                        <p>
+                            我们恳请您理解与合作。如有任何问题或需要帮助，请随时与我们联系。
+                            我们将在此帮助确保您的住宿尽可能愉快和无忧无虑。
+                        </p>
+                        <p>此致，<br>酒店管理团队</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alert Messages for JavaScript -->
+        <div id="messages" style="display: none;">
+            <span id="select-reservation-message" th:text="#{reservation.SelectReservation}"></span>
+            <span id="check-out-passed" th:text="#{reservation.checkOutPassed}"></span>
+            <span id="check-in-passed" th:text="#{reservation.checkInPassed}"></span>
+            <span id="reservation-has-been-canceled" th:text="#{reservation.reservationHasBeenCanceled}"></span>
+            <span id="reservation-with-cancellation-fee" th:text="#{reservation.confirmCancellationWithFee}"></span>
+            <span id="reservation-without-cancellation-fee" th:text="#{reservation.confirmCancellationWithoutFee}"></span>
+            <span id="viewGuestList" th:text="#{reservation.viewGuestList}" style="display:none;"></span>
+        </div>
+
+        <!-- İçeriğinizi buraya ekleyin -->
+    </div>
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+
+</body>
+</html>
